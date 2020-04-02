@@ -1,8 +1,5 @@
 package test;
 
-
-
-import java.awt.Dialog;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JDialog;
@@ -37,6 +34,13 @@ public class Main {
 		}	
 	}
 	
+	
+	/**
+	 * 
+	 * 1 block  - 4096 bytes
+	 * 1 block  - 8 sectors
+	 * 1 sector - 512 bytes
+	 * **/
 	public static long calculateFileSize(File file) throws IOException {
 		  int fileSizeBlock = 0;
 		  if(file.isDirectory()) {
@@ -48,15 +52,20 @@ public class Main {
 		    
 		  }else {
 			  
-			  float s = (float)file.length()/4096;
+			  float fileSizeKilobyte = (float)file.length()/4096;
 			  
-			  if(s%10!=0) {
-				  fileSizeBlock =+ ((int)s+1)*8;
+			  if(fileSizeKilobyte%10!=0) {
+				  fileSizeBlock =+ ((int)fileSizeKilobyte+1)*8;
 			  }else {
-				  fileSizeBlock =+ ((int)s)*8;
+				  fileSizeBlock =+ ((int)fileSizeKilobyte)*8;
 			  }
 		  }
-		
+		  
+		  
+		/***
+		 * for du -a to see all files and directories
+		 * comment if()
+		 * */
 		if(!file.isHidden()&&!file.isFile()) {
 		  System.out.println(fileSizeBlock+"\t"+ file.getPath());
 		}
